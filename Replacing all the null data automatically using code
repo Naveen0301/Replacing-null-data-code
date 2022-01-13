@@ -1,0 +1,13 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+df = pd.read_csv("path or link")
+sns.heatmap(df.isnull(),cbar=False) #it shows null data visualization 
+lst = df.columns[df.isnull().any()].tolist() # it catches the null data column
+for i in lst:
+    if df[i].dtype in ["float64","int64"]: # if the the column has numeric and float values it replaces it my mean.
+        df[i].fillna(value=df[i].mean(),inplace=True)
+    else:  # if the the column has numeric and float values it replaces it my mode.
+        df[i].fillna(value=df[i].mode()[0],inplace=True)
+sns.heatmap(df.isnull(),cbar=False) # clear form of data 
